@@ -1,0 +1,57 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{676E9444-1F2E-4D14-A18B-909B90DFEF7A}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Win32</Platform>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>SCHOOL</AssemblyName>
+    <OutputName>school</OutputName>
+    <DefineConstants>_ABCDllMode_=&gt;0%3b_ABCLinkMode_=&gt;1</DefineConstants>
+    <Model>Lib</Model>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <vid>full</vid>
+    <check_stack>True</check_stack>
+    <check_index>True</check_index>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <vid>off</vid>
+    <check_stack>False</check_stack>
+    <check_index>False</check_index>
+  </PropertyGroup>
+  <ItemGroup>
+    <FileDriver Include="TOPSPEED" />
+    <Compile Include="SCHOOL.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="SCHOOL001.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="SCHOOL002.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="SCHOOL003.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="SCHOOL004.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="SCHOOL005.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="SCHOOL_BC.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="SCHOOL_BC0.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Library Include="Closed.ico" />
+    <Library Include="Open.ico" />
+    <Library Include="school.EXE.manifest" />
+  </ItemGroup>
+  <Import Project="$(ClarionBinPath)\SoftVelocity.Build.Clarion.targets" />
+</Project>

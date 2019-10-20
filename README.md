@@ -1,2 +1,1 @@
-# sqlite-x
-sqlite for Clarion
+# sqlite for Clarion
