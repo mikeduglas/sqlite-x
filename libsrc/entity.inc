@@ -1,3 +1,7 @@
+!** sqlite for Clarion
+!** 20.10.2019
+!** mikeduglas66@gmail.com
+
                               ITEMIZE
 Entity:GROUP                    EQUATE(1)
 Entity:QUEUE                    EQUATE(2)

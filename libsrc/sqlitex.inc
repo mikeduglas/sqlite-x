@@ -1,3 +1,7 @@
+!** sqlite for Clarion
+!** 20.10.2019
+!** mikeduglas66@gmail.com
+
   INCLUDE('abutil.inc'), ONCE
   INCLUDE('entity.inc'), ONCE
 
