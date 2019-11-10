@@ -83,13 +83,17 @@ nFields                         LONG(0)
 
 FieldPrintableValue           PROCEDURE(*? fldRef)
   CODE
+  IF CLIP(fldRef) = ''
+    RETURN 'NULL'
+  END
+  
   IF ISSTRING(fldRef)
-    RETURN CHOOSE(CLIP(fldRef) <> '', printf('%S', fldRef), 'NULL')
+    RETURN printf('%S', fldRef)
   ELSIF NUMERIC(fldRef)
     RETURN fldRef
   ELSE
     !neither STRING nor NUMERIC
-    RETURN CHOOSE(CLIP(fldRef) <> '', printf('%S', fldRef), 'NULL')
+    RETURN printf('%S', fldRef)
   END
 
 StringToHex                   PROCEDURE(STRING pData)
@@ -331,22 +335,14 @@ TEntity.GetPrintableValue     PROCEDURE(*GROUP pGrp)
 fldRef                          ANY
   CODE
   fldRef = SELF.GetRawValue(pGrp)
-  IF CLIP(fldRef) <> ''
-    RETURN FieldPrintableValue(fldRef)
-  END
-
-  RETURN ''
+  RETURN FieldPrintableValue(fldRef)
   
 TEntity.GetPrintableValue     PROCEDURE(*FILE pFile)
 rec                             &GROUP
 fldRef                          ANY
   CODE
   fldRef = SELF.GetRawValue(pFile)
-  IF CLIP(fldRef) <> ''
-    RETURN FieldPrintableValue(fldRef)
-  END
-
-  RETURN ''
+  RETURN FieldPrintableValue(fldRef)
   
 TEntity.KeyValues             PROCEDURE(*GROUP pGrp)
 i                               LONG, AUTO
@@ -483,7 +479,7 @@ vlist                           ANY
     !- current record
     LOOP i = 1 TO SELF.FieldCount()
       SELF.GetByIndex(i)
-      IF CLIP(rlist) <> ''
+      IF CLIP(vlist) <> ''
         vlist = CLIP(vlist) &','
       END
       vlist = CLIP(vlist) & SELF.GetPrintableValue(pFile)

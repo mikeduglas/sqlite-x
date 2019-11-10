@@ -140,6 +140,9 @@ szInput                         CSTRING(LEN(pInput) + 1)
 UnicodeText                     CSTRING(LEN(pInput)*2+2)
 DecodedText                     CSTRING(LEN(pInput)*2+2)
 Len                             LONG, AUTO
+
+CP_UTF16                        EQUATE(-1)
+
   CODE
   IF NOT pInput
     RETURN ''
@@ -154,6 +157,10 @@ Len                             LONG, AUTO
   END
   !- get UnicodeText terminated by <0,0>
   winapi::MultiByteToWideChar(pInputCodePage, 0, ADDRESS(szInput), -1, ADDRESS(UnicodeText), Len)
+  
+  IF pOutputCodepage = CP_UTF16
+    RETURN UnicodeText[1 : Len * 2]
+  END
   
   !- get length of DecodedText in bytes
   Len = winapi::WideCharToMultiByte(pOutputCodePage, 0, ADDRESS(UnicodeText), -1, 0, 0, 0, 0)
@@ -229,13 +236,13 @@ sqlite::result_null           PROCEDURE(sqlite3_context ctx)
   sqlite3_result_null(ctx)
 
 sqlite::result_text           PROCEDURE(sqlite3_context ctx, STRING value)
-szvalue                         CSTRING(LEN(value)*2)
+szvalue                         CSTRING(LEN(value)*2+2)
   CODE
   szvalue = CLIP(sqlite::ToUtf8(value))
   sqlite3_result_text(ctx, szvalue, -1, SQLITE_STATIC)
   
 sqlite::bind_text             PROCEDURE(sqlite3_stmt stmt, LONG pIndex, STRING pText)
-szvalue                         CSTRING(LEN(pText)*2)
+szvalue                         CSTRING(LEN(pText)*2+2)
   CODE
   szvalue = CLIP(sqlite::ToUtf8(pText))
   RETURN sqlite3_bind_text(stmt, pIndex, szvalue, -1, SQLITE_TRANSIENT)
@@ -316,7 +323,7 @@ TSqliteBase.Destruct          PROCEDURE()
   END
   
 TSqliteBase.Open              PROCEDURE(STRING filename)
-szfilename                      CSTRING(256)
+szfilename                      CSTRING(256*2+2)
 rc                              SQLITE_Result_Code, AUTO
   CODE
   IF filename = SQLITE_DB_TEMPORARY OR filename = SQLITE_DB_MEMORY
@@ -346,7 +353,7 @@ TSqliteBase.ErrMsg            PROCEDURE()
   RETURN sqlite3_errmsg(SELF.db)
 
 TSqliteBase.ExecQuery         PROCEDURE(STRING pSql, LONG lpObject)
-sql                             CSTRING(LEN(pSql) * 2)  !- sql query in UTF-8
+sql                             CSTRING(LEN(pSql)*2+2)  !- sql query in UTF-8
 cbAddress                       LONG, AUTO              !- callback address
 rc                              SQLITE_Result_Code, AUTO
   CODE
@@ -453,7 +460,7 @@ TSqliteBase.Progress          PROCEDURE()
   RETURN SQLITE_OK
   
 TSqliteBase.Prepare           PROCEDURE(STRING pSql)
-sql                             CSTRING(LEN(pSql) * 2)  !- sql query in UTF-8
+sql                             CSTRING(LEN(pSql)*2+2)  !- sql query in UTF-8
 stmt                            sqlite3_stmt, AUTO
   CODE
   sql = CLIP(sqlite::ToUtf8(pSql))
