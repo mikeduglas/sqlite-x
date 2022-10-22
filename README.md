@@ -27,10 +27,9 @@ For example, in a browse by TPS table you can apply such filter
 
 ## Dependencies
 - sqlite3.dll
- 
-## Price
-- $100
 
 ## Contacts
 - <mikeduglas@yandex.ru>  
 - <mikeduglas66@gmail.com>
+ 
+[Buy now](https://www.clarionshop.com/checkout.cfm?pid=1658&q=1&)
