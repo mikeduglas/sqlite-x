@@ -8,6 +8,7 @@
 - Prepared statements supported.
 - Progress of query execution.
 - SQL query result may be immediately stored in a variable, a group, a queue, or a table.
+- Export to CSV (file or clipboard).
 - You can apply SQL filter in standard Browse template, even against non-SQL data.  
 For example, in a browse by TPS table you can apply such filter  
 
